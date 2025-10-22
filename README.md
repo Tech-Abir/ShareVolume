@@ -1,20 +1,53 @@
-# Auto-generated README (Round 1)
+# CMG Shares Outstanding (SEC XBRL) Web App
 
-**Project brief:** Your assigned company: Chipotle Mexican Grill (CMG), CIK 0001058090.
+## Overview
+This lightweight, single-page web app fetches the SEC XBRL concept EntityCommonStockSharesOutstanding for Chipotle Mexican Grill (CMG, CIK 0001058090), filters entries where:
+- fy > 2020, and
+- val is numeric,
 
-Fetch https://data.sec.gov/api/xbrl/companyconcept/CIK0001058090/dei/EntityCommonStockSharesOutstanding.json (set a descriptive User-Agent per SEC guidance). 
-Read .entityName. Filter .units.shares[] for entries whose y > '2020' and includes a numeric al. 
-Save data.json with max/min values. Render a visually appealing index.html with title/h1 containing entityName, and IDs share-max-value, share-max-fy, share-min-value, share-min-fy. Commit uid.txt as-is.
+then computes the maximum and minimum values among those filtered entries.
 
-**Attachments:**
+It displays the results on the page and allows you to download a data.json file containing:
+- entityName
+- max { fy, val }
+- min { fy, val }
 
+The title and H1 dynamically reflect the SEC entityName for CMG.
 
-**Checks to meet:**
-
+Note on User-Agent: Per SEC guidance, API requests should include a descriptive User-Agent. Browsers do not allow setting the User-Agent header directly from client-side JavaScript, which can lead to CORS or policy-related failures. This app:
+- Attempts a direct fetch (often works).
+- Provides a “curl” fallback with a proper User-Agent.
+- Lets you paste the fetched JSON for processing if the browser request fails.
 
 ## Setup
-1. Open `index.html` in a browser.
-2. No build steps required.
+No build steps are required.
 
-## Notes
-This README was generated as a fallback (AI Pipe did not return an explicit README).
+- index.html is a self-contained app (HTML/CSS/JS inline).
+- Simply open index.html in a modern browser.
+
+Optional: For best reliability and compliance with SEC guidance, serve this page from a simple static server:
+- Python: python3 -m http.server 8000
+- Node (http-server): npx http-server -p 8000
+
+Then navigate to http://localhost:8000.
+
+## Usage
+1. Open index.html.
+2. The app will automatically attempt to fetch:
+   https://data.sec.gov/api/xbrl/companyconcept/CIK0001058090/dei/EntityCommonStockSharesOutstanding.json
+3. On success, you will see:
+   - A title and H1 showing the SEC entityName.
+   - Highest and lowest numeric values (FY > 2020) for shares outstanding.
+   - A “Download data.json” button to save the results.
+4. If the fetch fails (CORS/User-Agent restrictions):
+   - Click “Copy curl command”.
+   - Run the curl command in your terminal; it includes a descriptive User-Agent, as required by SEC guidance.
+   - Paste the resulting JSON into the provided textarea.
+   - Click “Process pasted JSON” to compute stats and enable the data.json download.
+
+Notes:
+- Filtering strictly uses fy > 2020 (i.e., 2021 and later) with numeric val entries.
+- The app computes min/max across all filtered units.shares rows without deduplicating per fiscal year.
+
+## Round 2
+N/A (This is Round 1).

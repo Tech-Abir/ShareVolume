@@ -1,11 +1,442 @@
-<html>
-  <head><title>Fallback App</title></head>
-  <body>
-    <h1>Hello (fallback)</h1>
-    <p>This app was generated as a fallback because AI Pipe failed. Brief: Your assigned company: Chipotle Mexican Grill (CMG), CIK 0001058090.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Loading… | EntityCommonStockSharesOutstanding</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <style>
+    :root{
+      --bg: #0f172a; /* slate-900 */
+      --card: #111827F2; /* gray-900 w/ alpha */
+      --text: #e5e7eb; /* gray-200 */
+      --muted: #9ca3af; /* gray-400 */
+      --accent: #22c55e; /* green-500 */
+      --accent-2: #60a5fa; /* blue-400 */
+      --danger: #f87171; /* red-400 */
+      --shadow: 0 10px 25px rgba(0,0,0,.35);
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 10% -10%, #1e293b 0%, rgba(15,23,42,0) 50%),
+        radial-gradient(900px 500px at 110% 10%, #0e7490 0%, rgba(15,23,42,0) 50%),
+        radial-gradient(800px 500px at 50% 120%, #14532d 0%, rgba(15,23,42,0) 55%),
+        var(--bg);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+    .container{
+      width: min(1100px, 95vw);
+      display: grid;
+      gap: 18px;
+    }
+    header{
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    h1{
+      margin: 0;
+      font-size: clamp(22px, 3.2vw, 34px);
+      letter-spacing: .3px;
+    }
+    .badge{
+      background: linear-gradient(135deg, #0ea5e9 0%, #22c55e 100%);
+      color: white;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .3px;
+      text-transform: uppercase;
+      box-shadow: var(--shadow);
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(17, 24, 39, .85), rgba(17, 24, 39, .75));
+      border: 1px solid rgba(255,255,255,.06);
+      backdrop-filter: blur(8px);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .card .content{
+      padding: 20px;
+    }
+    .grid{
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    @media (max-width: 740px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+    .metric{
+      background: linear-gradient(180deg, rgba(2,6,23,.7), rgba(2,6,23,.35));
+      border: 1px solid rgba(148,163,184,.18);
+      border-radius: 14px;
+      padding: 16px;
+      display: grid;
+      gap: 6px;
+    }
+    .metric h3{
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: .4px;
+      text-transform: uppercase;
+    }
+    .metric .value{
+      font-size: clamp(22px, 4.2vw, 36px);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: .3px;
+      background: linear-gradient(90deg, #e5e7eb, #a7f3d0);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .metric .sub{
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .controls{
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      padding: 16px;
+      border-top: 1px solid rgba(255,255,255,.06);
+      background: linear-gradient(180deg, rgba(2,6,23,.6), rgba(2,6,23,.25));
+    }
+    button, .btn{
+      appearance: none;
+      border: 0;
+      padding: 10px 14px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+      font-weight: 700;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(34,197,94,.35);
+      transition: transform .1s ease, box-shadow .2s ease, opacity .2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    button.secondary, .btn.secondary{
+      background: linear-gradient(135deg, #334155, #1f2937);
+      color: #d1d5db;
+      box-shadow: 0 6px 16px rgba(0,0,0,.35);
+      border: 1px solid rgba(148,163,184,.25);
+    }
+    button:disabled, .btn:disabled{
+      opacity: .6;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    button:hover:not(:disabled), .btn:hover:not(:disabled){
+      transform: translateY(-1px);
+    }
+    .status{
+      padding: 14px 16px;
+      font-size: 14px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .status .dot{
+      width: 10px; height: 10px;
+      border-radius: 99px;
+      background: #fde047; /* amber */
+      animation: pulse 1.4s infinite ease-in-out;
+      box-shadow: 0 0 20px rgba(250, 204, 21, .35);
+    }
+    .status.success .dot{ background: #34d399; box-shadow: 0 0 20px rgba(52, 211, 153, .35); }
+    .status.error .dot{ background: #fb7185; box-shadow: 0 0 20px rgba(251, 113, 133, .35); }
+    @keyframes pulse{
+      0%, 100% { transform: scale(1); opacity: .9; }
+      50% { transform: scale(1.18); opacity: .6; }
+    }
+    details{
+      border-top: 1px dashed rgba(255,255,255,.12);
+      padding: 14px 16px 6px 16px;
+    }
+    details summary{
+      cursor: pointer;
+      color: var(--muted);
+      font-weight: 600;
+      outline: none;
+    }
+    code, pre{
+      background: rgba(2,6,23,.6);
+      border: 1px solid rgba(148,163,184,.22);
+      border-radius: 10px;
+      color: #cbd5e1;
+    }
+    pre{ padding: 10px; overflow: auto; }
+    .paste-area{
+      display: grid; gap: 10px;
+      padding: 14px 0 0;
+    }
+    textarea{
+      width: 100%;
+      min-height: 160px;
+      background: rgba(2,6,23,.6);
+      color: #e5e7eb;
+      border: 1px solid rgba(148,163,184,.25);
+      border-radius: 10px;
+      padding: 12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12.5px;
+      outline: none;
+      resize: vertical;
+    }
+    .footer-note{
+      font-size: 12px;
+      color: var(--muted);
+      padding: 10px 16px 20px;
+    }
+    .legend { color: var(--muted); font-size: 13px; margin-top: 4px; }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header>
+      <h1 id="page-title">Loading entity…</h1>
+      <span class="badge">SEC XBRL concept: EntityCommonStockSharesOutstanding</span>
+    </header>
 
-Fetch https://data.sec.gov/api/xbrl/companyconcept/CIK0001058090/dei/EntityCommonStockSharesOutstanding.json (set a descriptive User-Agent per SEC guidance). 
-Read .entityName. Filter .units.shares[] for entries whose y > '2020' and includes a numeric al. 
-Save data.json with max/min values. Render a visually appealing index.html with title/h1 containing entityName, and IDs share-max-value, share-max-fy, share-min-value, share-min-fy. Commit uid.txt as-is.</p>
-  </body>
+    <section class="card">
+      <div class="content">
+        <div class="status" id="status" aria-live="polite">
+          <span class="dot" id="status-dot"></span>
+          <span id="status-text">Fetching data from SEC API…</span>
+        </div>
+
+        <div class="grid" aria-live="polite" aria-busy="true">
+          <div class="metric">
+            <h3>Highest shares outstanding (FY > 2020)</h3>
+            <div class="value" id="share-max-value">—</div>
+            <div class="sub">Fiscal Year: <strong id="share-max-fy">—</strong></div>
+            <div class="legend">Based on units.shares entries with numeric val</div>
+          </div>
+          <div class="metric">
+            <h3>Lowest shares outstanding (FY > 2020)</h3>
+            <div class="value" id="share-min-value">—</div>
+            <div class="sub">Fiscal Year: <strong id="share-min-fy">—</strong></div>
+            <div class="legend">Based on units.shares entries with numeric val</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <a id="download-btn" class="btn" href="#" download="data.json" aria-disabled="true">Download data.json</a>
+        <button id="retry-btn" class="secondary">Retry fetch</button>
+        <button id="copy-curl-btn" class="secondary">Copy curl command</button>
+        <span class="legend" id="ua-note">User-Agent (server-side recommended): CMG-DataApp/1.0 (+contact: dev@example.com)</span>
+      </div>
+
+      <details id="fallback-details">
+        <summary>Having trouble due to CORS or User-Agent restrictions? Use this fallback.</summary>
+        <div class="paste-area">
+          <p class="legend">
+            If the browser fetch is blocked, run the provided curl command in your terminal to fetch
+            the SEC JSON with a descriptive User-Agent, then paste the JSON below and click “Process pasted JSON”.
+          </p>
+          <pre id="curl-snippet"><code>curl -s 'https://data.sec.gov/api/xbrl/companyconcept/CIK0001058090/dei/EntityCommonStockSharesOutstanding.json' \
+  -H 'User-Agent: CMG-DataApp/1.0 (Chipotle CMG demo; dev@example.com)' \
+  -H 'Accept: application/json' -o cmg_shares.json</code></pre>
+          <textarea id="json-input" placeholder="Paste JSON from the SEC endpoint here…"></textarea>
+          <div>
+            <button id="process-json-btn">Process pasted JSON</button>
+          </div>
+        </div>
+      </details>
+
+      <div class="footer-note">
+        Notes: This tool filters units.shares entries where fy > 2020 and val is numeric, then computes min/max.
+        For production, fetch from a backend that can set a descriptive User-Agent per SEC guidance.
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function(){
+      const CIK = '0001058090';
+      const ENDPOINT = `https://data.sec.gov/api/xbrl/companyconcept/CIK${CIK}/dei/EntityCommonStockSharesOutstanding.json`;
+      const UA = 'CMG-DataApp/1.0 (Chipotle CMG demo; dev@example.com)';
+
+      // Elements
+      const titleEl = document.getElementById('page-title');
+      const statusEl = document.getElementById('status');
+      const statusText = document.getElementById('status-text');
+      const statusDot = document.getElementById('status-dot');
+
+      const maxValEl = document.getElementById('share-max-value');
+      const maxFyEl  = document.getElementById('share-max-fy');
+      const minValEl = document.getElementById('share-min-value');
+      const minFyEl  = document.getElementById('share-min-fy');
+
+      const downloadBtn = document.getElementById('download-btn');
+      const retryBtn = document.getElementById('retry-btn');
+      const copyCurlBtn = document.getElementById('copy-curl-btn');
+      const curlSnippet = document.getElementById('curl-snippet');
+      const fallbackDetails = document.getElementById('fallback-details');
+      const uaNote = document.getElementById('ua-note');
+
+      const jsonInput = document.getElementById('json-input');
+      const processJsonBtn = document.getElementById('process-json-btn');
+
+      let lastData = null;
+      let downloadUrl = null;
+
+      function setStatus(kind, text){
+        statusEl.classList.remove('success', 'error');
+        statusEl.classList.add(kind);
+        statusText.textContent = text;
+        if(kind === 'success'){ statusDot.style.animation = 'none'; }
+      }
+
+      function toNum(n){
+        const v = typeof n === 'number' ? n : Number(n);
+        return Number.isFinite(v) ? v : null;
+      }
+
+      function formatNumber(n){
+        try{
+          return new Intl.NumberFormat(undefined, {maximumFractionDigits: 2}).format(n);
+        }catch{
+          return String(n);
+        }
+      }
+
+      function computeMinMax(data){
+        const shares = (data && data.units && Array.isArray(data.units.shares)) ? data.units.shares : [];
+        const filtered = shares.filter(d => {
+          if(!d) return false;
+          const fy = toNum(d.fy);
+          const val = toNum(d.val);
+          return fy !== null && fy > 2020 && val !== null;
+        });
+
+        if(filtered.length === 0) return {min: null, max: null, count: 0};
+
+        let min = null, max = null;
+        for(const d of filtered){
+          const item = { fy: toNum(d.fy), val: toNum(d.val), end: d.end, filed: d.filed, form: d.form, accn: d.accn };
+          if(!min || item.val < min.val) min = item;
+          if(!max || item.val > max.val) max = item;
+        }
+        return {min, max, count: filtered.length};
+      }
+
+      function updateDom(entityName, result){
+        document.title = `${entityName} | EntityCommonStockSharesOutstanding`;
+        titleEl.textContent = entityName;
+
+        if(result.max){
+          maxValEl.textContent = formatNumber(result.max.val);
+          maxFyEl.textContent = String(result.max.fy);
+        }else{
+          maxValEl.textContent = '—';
+          maxFyEl.textContent = '—';
+        }
+
+        if(result.min){
+          minValEl.textContent = formatNumber(result.min.val);
+          minFyEl.textContent = String(result.min.fy);
+        }else{
+          minValEl.textContent = '—';
+          minFyEl.textContent = '—';
+        }
+      }
+
+      function buildDownload(entityName, result){
+        const payload = {
+          entityName,
+          metric: 'EntityCommonStockSharesOutstanding',
+          filteredBy: "fy > 2020 and numeric val",
+          data: {
+            max: result.max ? { fy: result.max.fy, val: result.max.val } : null,
+            min: result.min ? { fy: result.min.fy, val: result.min.val } : null
+          }
+        };
+        const blob = new Blob([JSON.stringify(payload, null, 2)], {type: 'application/json'});
+        if(downloadUrl) URL.revokeObjectURL(downloadUrl);
+        downloadUrl = URL.createObjectURL(blob);
+        downloadBtn.href = downloadUrl;
+        downloadBtn.setAttribute('download', 'data.json');
+        downloadBtn.setAttribute('aria-disabled', 'false');
+      }
+
+      function processData(data){
+        lastData = data;
+        const entityName = data && data.entityName ? data.entityName : 'Unknown Entity';
+        const result = computeMinMax(data);
+        updateDom(entityName, result);
+        buildDownload(entityName, result);
+        setStatus('success', `Loaded ${entityName}. Processed ${result.count} entries (FY > 2020).`);
+      }
+
+      async function fetchSec(){
+        setStatus('', 'Fetching data from SEC API…');
+        // Browser cannot set User-Agent; we keep a note and attempt a simple GET
+        uaNote.textContent = `User-Agent (server-side recommended): ${UA}`;
+        try{
+          // Avoid forbidden headers to reduce CORS issues
+          const res = await fetch(ENDPOINT, { method: 'GET', headers: { 'Accept': 'application/json' } });
+          if(!res.ok){
+            throw new Error(`HTTP ${res.status}`);
+          }
+          const data = await res.json();
+          processData(data);
+        }catch(err){
+          setStatus('error', `Fetch failed (${err.message}). Use the fallback (curl + paste) or retry.`);
+          fallbackDetails.open = true;
+          throw err;
+        }
+      }
+
+      retryBtn.addEventListener('click', () => {
+        fetchSec().catch(()=>{});
+      });
+
+      copyCurlBtn.addEventListener('click', async () => {
+        const text = curlSnippet.innerText || curlSnippet.textContent;
+        try{
+          await navigator.clipboard.writeText(text);
+          copyCurlBtn.textContent = 'Copied!';
+          setTimeout(() => copyCurlBtn.textContent = 'Copy curl command', 1200);
+        }catch{
+          // ignore
+        }
+      });
+
+      processJsonBtn.addEventListener('click', () => {
+        const raw = jsonInput.value.trim();
+        if(!raw){ alert('Please paste the JSON first.'); return; }
+        try{
+          const data = JSON.parse(raw);
+          processData(data);
+        }catch(e){
+          setStatus('error', 'Invalid JSON. Please ensure you pasted the full JSON file.');
+        }
+      });
+
+      // Kick off
+      fetchSec().catch(()=>{ /* handled above */ });
+    })();
+  </script>
+</body>
 </html>
